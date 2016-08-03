@@ -9,6 +9,7 @@ class Endpoint
     protected $httpMethod;
     protected $path;
     protected $exampleResponse;
+    protected $exampleRequest;
     protected $allowedRoles = [];
 
     public function getName()
@@ -59,6 +60,16 @@ class Endpoint
     public function setExampleResponse($exampleResponse)
     {
         $this->exampleResponse = $exampleResponse;
+    }
+    
+    public function getExampleRequest()
+    {
+        return $this->exampleRequest;
+    }
+
+    public function setExampleRequest($exampleRequest)
+    {
+        $this->exampleRequest = $exampleRequest;
     }
 
     public function getAllowedRoles()

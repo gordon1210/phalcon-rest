@@ -15,6 +15,7 @@ class EndpointTransformer extends Transformer
             'httpMethod' => $endpoint->getHttpMethod(),
             'path' => $endpoint->getPath(),
             'exampleResponse' => $endpoint->getExampleResponse(),
+            'exampleRequest' => $endpoint->getExampleRequest(),
             'allowedRoles' => $endpoint->getAllowedRoles()
         ];
     }

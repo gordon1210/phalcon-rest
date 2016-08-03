@@ -23,6 +23,7 @@ class Endpoint
 
     protected $postedDataMethod = PostedDataMethods::AUTO;
     protected $exampleResponse;
+    protected $exampleRequest;
 
     protected $allowedRoles = [];
     protected $deniedRoles = [];
@@ -298,6 +299,25 @@ class Endpoint
     public function getExampleResponse()
     {
         return $this->exampleResponse;
+    }
+    
+    /**
+     * @param string $exampleRequest Example of the request of the endpoint
+     *
+     * @return $this
+     */
+    public function exampleRequest($exampleRequest)
+    {
+        $this->exampleRequest = $exampleRequest;
+        return $this;
+    }
+
+    /**
+     * @return string Example of the request of the endpoint
+     */
+    public function getExampleRequest()
+    {
+        return $this->exampleRequest;
     }
 
     /**

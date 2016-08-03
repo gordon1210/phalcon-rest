@@ -96,6 +96,7 @@ class Documentation extends Plugin
             $endpoint->setHttpMethod($apiEndpoint->getHttpMethod());
             $endpoint->setPath($apiEndpoint->getPath());
             $endpoint->setExampleResponse($apiEndpoint->getExampleResponse());
+            $endpoint->setExampleRequest($apiEndpoint->getExampleRequest());
 
             $allowedRoleNames = [];
 
