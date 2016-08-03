@@ -10,6 +10,7 @@ class Collection
 
     protected $endpoints = [];
     protected $fields;
+    protected $includes;
 
     public function getName()
     {
@@ -49,6 +50,16 @@ class Collection
     public function setFields($fields)
     {
         $this->fields = $fields;
+    }
+    
+    public function getIncludes()
+    {
+        return $this->includes;
+    }
+
+    public function setIncludes($includes)
+    {
+        $this->includes = $includes;
     }
 
     public function addManyEndpoints(array $endpoints)

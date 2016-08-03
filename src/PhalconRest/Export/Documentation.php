@@ -82,6 +82,7 @@ class Documentation extends Plugin
                         }
 
                         $collection->setFields($fields);
+                        $collection->setIncludes($transformer->getAvailableIncludes());
                     }
                 }
             }
