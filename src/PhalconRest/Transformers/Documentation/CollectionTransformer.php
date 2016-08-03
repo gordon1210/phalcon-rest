@@ -17,7 +17,8 @@ class CollectionTransformer extends Transformer
             'name' => $collection->getName(),
             'description' => $collection->getDescription(),
             'prefix' => $collection->getPath(),
-            'fields' => $collection->getFields()
+            'fields' => $collection->getFields(),
+            'includes' => $collection->getIncludes(),
         ];
     }
 
