@@ -147,6 +147,16 @@ class Collection extends \Phalcon\Mvc\Micro\Collection implements MountableInter
 
                 $this->delete($endpoint->getPath(), $endpoint->getHandlerMethod(), $this->createRouteName($endpoint));
                 break;
+            
+            case HttpMethods::PATCH:
+
+                $this->patch($endpoint->getPath(), $endpoint->getHandlerMethod(), $this->createRouteName($endpoint));
+                break;
+            
+            case HttpMethods::HEAD:
+
+                $this->head($endpoint->getPath(), $endpoint->getHandlerMethod(), $this->createRouteName($endpoint));
+                break;
         }
 
         return $this;
