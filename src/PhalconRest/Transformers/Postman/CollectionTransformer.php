@@ -18,11 +18,14 @@ class CollectionTransformer extends Transformer
         $folders = [];
 
         foreach ($requests as $req) {
-            if (!in_array($req->folder, array_column($folders, 'id'))) {
+            if (($i = array_search($req->folder, array_column($folders, 'id'))) === false) {
                 $folders[] = [
                     'id' => $req->folder,
                     'name' => $req->collectionName,
+                    'orders' => [],
                 ];
+            } else {
+                $folders[$i]['orders'][] = $req->id;
             }
         }
 
