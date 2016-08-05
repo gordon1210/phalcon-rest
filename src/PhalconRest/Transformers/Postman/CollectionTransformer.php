@@ -22,10 +22,10 @@ class CollectionTransformer extends Transformer
                 $folders[] = [
                     'id' => $req->folder,
                     'name' => $req->collectionName,
-                    'orders' => [],
+                    'order' => [],
                 ];
             } else {
-                $folders[$i]['orders'][] = $req->id;
+                $folders[$i]['order'][] = $req->id;
             }
         }
 
