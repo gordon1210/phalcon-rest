@@ -34,7 +34,7 @@ class Collection
 
         $this->addRequest(new Request(
             $this->id,
-            uniqid(),
+            static::GUID(uniqid()),
             $name,
             null,
             $this->basePath . $route->getPattern(),
@@ -66,7 +66,7 @@ class Collection
 
             $this->addRequest(new Request(
                 $this->id,
-                uniqid(),
+                static::GUID(uniqid()),
                 $collection->getPrefix() . $endpoint->getPath(),
                 $endpoint->getDescription(),
                 $this->basePath . $collection->getPrefix() . $endpoint->getPath(),
@@ -94,9 +94,9 @@ class Collection
         }
         
         if (function_exists('com_create_guid') === true) {
-            $guid = trim(com_create_guid(), '{}');
+            $guid = strtolower(trim(com_create_guid(), '{}'));
         } else {
-            $guid = sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+            $guid = strtolower(sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535)));
         }
         
         $guids[$collectionIdent] = $guid;
