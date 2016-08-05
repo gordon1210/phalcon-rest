@@ -7,6 +7,8 @@ use PhalconRest\Transformers\Transformer;
 
 class CollectionTransformer extends Transformer
 {
+    const FOLDERS = false;
+    
     protected $defaultIncludes = [
         'requests',
     ];
@@ -16,24 +18,37 @@ class CollectionTransformer extends Transformer
         $requests = $collection->getRequests();
 
         $folders = [];
+        $order = [];
 
         foreach ($requests as $req) {
+            $order[] = $req->id;
             if (($i = array_search($req->folder, array_column($folders, 'id'))) === false) {
                 $folders[] = [
                     'id' => $req->folder,
                     'name' => $req->collectionName,
                     'order' => [],
+                    'owner' => $collection->owner,
                 ];
             } else {
                 $folders[$i]['order'][] = $req->id;
             }
         }
 
-        return [
+        $data = [
             'id' => $collection->id,
             'name' => $collection->name,
-            'folders' => $folders,
+            'owner' => $collection->owner,
+            'public' => false,
+            'published' => false,
+            'timestamp' => 0,
+            'order' => $order,
         ];
+        
+        if(static::FOLDERS) {
+           $data['folders'] = $folders; 
+        }
+        
+        return $data;
     }
 
     public function includeRequests(PostmanCollection $collection)

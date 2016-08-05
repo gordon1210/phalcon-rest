@@ -6,13 +6,15 @@ class Collection
 {
     public $id;
     public $name;
+    public $owner;
     public $basePath;
     protected $requests = [];
 
     public function __construct($name, $basePath)
     {
-        $this->id = uniqid();
+        $this->id = static::GUID(uniqid());
         $this->name = $name;
+        $this->owner = "712459";
         $this->basePath = $basePath;
     }
 
