@@ -41,7 +41,9 @@ class Collection
             $route->getHttpMethods(),
             'Authorization: Bearer {{authToken}}',
             null,
-            "raw"
+            "raw",
+            md5($route->getRouteId()),
+            $route->getRouteId()
         ));
     }
 
