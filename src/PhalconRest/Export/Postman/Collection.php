@@ -42,7 +42,7 @@ class Collection
             'Authorization: Bearer {{authToken}}',
             null,
             "raw",
-            md5($route->getRouteId()),
+            static::GUID($route->getRouteId()),
             $route->getRouteId()
         ));
     }
@@ -74,7 +74,7 @@ class Collection
                 'Authorization: Bearer {{authToken}}',
                 null,
                 "raw",
-                md5($collection->getIdentifier()),
+                static::GUID($collection->getIdentifier()),
                 $collection->getIdentifier()
             ));
         }
@@ -83,5 +83,24 @@ class Collection
     public function getRequests()
     {
         return $this->requests;
+    }
+    
+    private static function GUID($collectionIdent)
+    {
+        static $guids = [];
+        
+        if(array_key_exists($collectionIdent, $guids)) {
+            return $guids[$collectionIdent];
+        }
+        
+        if (function_exists('com_create_guid') === true) {
+            $guid = trim(com_create_guid(), '{}');
+        } else {
+            $guid = sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+        }
+        
+        $guids[$collectionIdent] = $guid;
+        
+        return $guid;
     }
 }
