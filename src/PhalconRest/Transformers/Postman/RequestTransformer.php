@@ -19,6 +19,7 @@ class RequestTransformer extends Transformer
             'headers' => $request->headers,
             'data' => $request->data,
             'dataMode' => $request->dataMode,
+            'folder' => $request->folder,
         ];
     }
 }

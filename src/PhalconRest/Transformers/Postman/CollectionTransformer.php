@@ -13,9 +13,23 @@ class CollectionTransformer extends Transformer
 
     public function transform(PostmanCollection $collection)
     {
+        $requests = $collection->getRequests();
+
+        $folders = [];
+
+        foreach ($requests as $req) {
+            if (!in_array($req->folder, array_column($folders, 'id'))) {
+                $folders[] = [
+                    'id' => $req->folder,
+                    'name' => $req->collectionName,
+                ];
+            }
+        }
+
         return [
             'id' => $collection->id,
             'name' => $collection->name,
+            'folders' => $folders,
         ];
     }
 

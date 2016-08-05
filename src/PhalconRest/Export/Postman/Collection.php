@@ -71,7 +71,9 @@ class Collection
                 $endpoint->getHttpMethod(),
                 'Authorization: Bearer {{authToken}}',
                 null,
-                "raw"
+                "raw",
+                md5($collection->getIdentifier()),
+                $collection->getIdentifier()
             ));
         }
     }

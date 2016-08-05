@@ -13,6 +13,8 @@ class Request
     public $headers;
     public $data;
     public $dataMode;
+    public $folder;
+    public $collectionName;
 
     public function __construct(
         $collectionId,
@@ -23,7 +25,9 @@ class Request
         $method,
         $headers,
         $data,
-        $dataMode
+        $dataMode,
+        $folder,
+        $collectionName
     ) {
         $this->collectionId = $collectionId;
         $this->id = $id;
@@ -34,5 +38,7 @@ class Request
         $this->headers = $headers;
         $this->data = $data;
         $this->dataMode = $dataMode;
+        $this->folder = $folder;
+        $this->collectionName = $collectionName;
     }
 }
