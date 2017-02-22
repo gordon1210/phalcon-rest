@@ -2,7 +2,7 @@
 
 namespace PhalconRest\Export\Documentation;
 
-class Endpoint
+class ApiEndpoint
 {
     protected $name;
     protected $description;

@@ -2,7 +2,7 @@
 
 namespace PhalconRest\Export\Documentation;
 
-class Collection
+class ApiCollection
 {
     protected $name;
     protected $description;
@@ -69,7 +69,7 @@ class Collection
         }
     }
 
-    public function addEndpoint(Endpoint $endpoint)
+    public function addEndpoint(ApiEndpoint $endpoint)
     {
         $this->endpoints[] = $endpoint;
     }

@@ -3,16 +3,15 @@
 namespace PhalconRest\Api;
 
 use Phalcon\Acl;
-use Phalcon\Di;
 use Phalcon\Mvc\Micro\CollectionInterface;
-use PhalconRest\Acl\MountableInterface;
-use PhalconRest\Constants\ErrorCodes;
-use PhalconRest\Constants\HttpMethods;
-use PhalconRest\Constants\PostedDataMethods;
-use PhalconRest\Core;
-use PhalconRest\Exception;
+use PhalconApi\Acl\MountableInterface;
+use PhalconApi\Constants\ErrorCodes;
+use PhalconApi\Constants\HttpMethods;
+use PhalconApi\Constants\PostedDataMethods;
+use PhalconApi\Core;
+use PhalconApi\Exception;
 
-class Collection extends \Phalcon\Mvc\Micro\Collection implements MountableInterface, CollectionInterface
+class ApiCollection extends \Phalcon\Mvc\Micro\Collection implements MountableInterface, CollectionInterface
 {
     protected $name;
     protected $description;
@@ -51,7 +50,7 @@ class Collection extends \Phalcon\Mvc\Micro\Collection implements MountableInter
     {
         $calledClass = get_called_class();
 
-        /** @var \PhalconRest\Api\Collection $collection */
+        /** @var \PhalconRest\Api\ApiCollection $collection */
         $collection = new $calledClass($prefix);
 
         if ($name) {
@@ -105,11 +104,11 @@ class Collection extends \Phalcon\Mvc\Micro\Collection implements MountableInter
     /**
      * Mounts endpoint to the collection
      *
-     * @param \PhalconRest\Api\Endpoint $endpoint Endpoint to mount (shortcut for endpoint function)
+     * @param \PhalconRest\Api\ApiEndpoint $endpoint Endpoint to mount (shortcut for endpoint function)
      *
      * @return static
      */
-    public function mount(Endpoint $endpoint)
+    public function mount(ApiEndpoint $endpoint)
     {
         $this->endpoint($endpoint);
         return $this;
@@ -118,11 +117,11 @@ class Collection extends \Phalcon\Mvc\Micro\Collection implements MountableInter
     /**
      * Mounts endpoint to the collection
      *
-     * @param \PhalconRest\Api\Endpoint $endpoint Endpoint to mount
+     * @param \PhalconRest\Api\ApiEndpoint $endpoint Endpoint to mount
      *
      * @return static
      */
-    public function endpoint(Endpoint $endpoint)
+    public function endpoint(ApiEndpoint $endpoint)
     {
         $endpointName = $endpoint->getName() ?
             : $endpoint->getIdentifier().$endpoint->getHandlerMethod()
@@ -166,7 +165,7 @@ class Collection extends \Phalcon\Mvc\Micro\Collection implements MountableInter
         return $this;
     }
 
-    protected function createRouteName(Endpoint $endpoint)
+    protected function createRouteName(ApiEndpoint $endpoint)
     {
         return serialize([
             'collection' => $this->getIdentifier(),
@@ -183,7 +182,7 @@ class Collection extends \Phalcon\Mvc\Micro\Collection implements MountableInter
     }
 
     /**
-     * @return \PhalconRest\Api\Endpoint[] Array of all mounted endpoints
+     * @return \PhalconRest\Api\ApiEndpoint[] Array of all mounted endpoints
      */
     public function getEndpoints()
     {
@@ -193,7 +192,7 @@ class Collection extends \Phalcon\Mvc\Micro\Collection implements MountableInter
     /**
      * @param string $name Name for the endpoint to return
      *
-     * @return \PhalconRest\Api\Endpoint|null Endpoint with the given name
+     * @return \PhalconRest\Api\ApiEndpoint|null Endpoint with the given name
      */
     public function getEndpoint($name)
     {
@@ -244,12 +243,14 @@ class Collection extends \Phalcon\Mvc\Micro\Collection implements MountableInter
     /**
      * Allows access to this collection for role with the given names. This can be overwritten on the Endpoint level.
      *
-     * @param array ...$roleNames Names of the roles to allow
+     * @param ...array $roleNames Names of the roles to allow
      *
      * @return static
      */
-    public function allow(...$roleNames)
+    public function allow()
     {
+        $roleNames = func_get_args();
+
         // Flatten array to allow array inputs
         $roleNames = Core::array_flatten($roleNames);
 
@@ -274,12 +275,14 @@ class Collection extends \Phalcon\Mvc\Micro\Collection implements MountableInter
     /***
      * Denies access to this collection for role with the given names. This can be overwritten on the Endpoint level.
      *
-     * @param array ...$roleNames Names of the roles to deny
+     * @param ...array $roleNames Names of the roles to deny
      *
      * @return $this
      */
-    public function deny(...$roleNames)
+    public function deny()
     {
+        $roleNames = func_get_args();
+
         // Flatten array to allow array inputs
         $roleNames = Core::array_flatten($roleNames);
 
@@ -303,7 +306,7 @@ class Collection extends \Phalcon\Mvc\Micro\Collection implements MountableInter
 
     public function getAclResources()
     {
-        $apiEndpointIdentifiers = array_map(function (Endpoint $apiEndpoint) {
+        $apiEndpointIdentifiers = array_map(function (ApiEndpoint $apiEndpoint) {
             return $apiEndpoint->getIdentifier();
         }, $this->endpointsByName);
 
@@ -330,7 +333,7 @@ class Collection extends \Phalcon\Mvc\Micro\Collection implements MountableInter
 
         foreach ($roles as $role) {
 
-            /** @var Endpoint $apiEndpoint */
+            /** @var ApiEndpoint $apiEndpoint */
             foreach ($this->endpointsByName as $apiEndpoint) {
 
                 $rule = null;

@@ -3,11 +3,11 @@ namespace PhalconRest\Mvc\Controllers;
 
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Query\Builder as QueryBuilder;
-use PhalconRest\Constants\ErrorCodes;
-use PhalconRest\Constants\PostedDataMethods;
-use PhalconRest\Exception;
+use PhalconApi\Constants\ErrorCodes;
+use PhalconApi\Constants\PostedDataMethods;
+use PhalconApi\Exception;
 
-class CrudResourceController extends \PhalconRest\Mvc\Controllers\ResourceController
+class CrudResourceController extends ResourceController
 {
     /*** ALL ***/
 
@@ -245,7 +245,7 @@ class CrudResourceController extends \PhalconRest\Mvc\Controllers\ResourceContro
 
             case PostedDataMethods::AUTO:
             default:
-                $postedData = $this->request->getPostedData();
+                $postedData = $this->request->getPostedData($this->getEndpoint()->getHttpMethod());
         }
 
         return $postedData;
