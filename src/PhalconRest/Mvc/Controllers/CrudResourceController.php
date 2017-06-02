@@ -110,7 +110,7 @@ class CrudResourceController extends ResourceController
         $response = $this->getFindResponse($item);
 
         $this->afterHandleFind($item, $response);
-        $this->beforeHandleRead();
+        $this->afterHandleRead();
         $this->afterHandle();
 
         return $response;
